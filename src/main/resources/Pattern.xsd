@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!--
+Schema for an Interoperability pattern; there are two core parts: i) the
+specification of an architecture, and ii) the state machine specification
+of the interoperability test behaviour. 
+
+-->
+
+    
+<xs:schema version="1.0"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified"
+           xmlns:arch="http://PatternNamespace/archTypes"
+           xmlns:behaviour="http://PatternNamespace/behaviourTypes">
+    
+    <xs:include schemaLocation="Architecture.xsd"/>
+    <xs:include schemaLocation="Behaviour.xsd"/>
+    
+    <xs:element name="data">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name" type="xs:string"/>
+                <xs:element name="value" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="patterndata">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="data"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="pattern">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="1" ref="patterndata"/>
+                <xs:element ref="architecture"/>
+                <xs:element ref="behaviour"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+  
+</xs:schema>

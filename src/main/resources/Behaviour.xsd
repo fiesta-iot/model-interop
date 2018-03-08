@@ -1,0 +1,173 @@
+<?xml version="1.0"?>
+<!--
+Schema for an Interoperability pattern; there are two core parts: i) the
+specification of an architecture, and ii) the state machine specification
+of the interoperability test behaviour. 
+
+-->
+
+<xs:schema version="1.0"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified">
+
+    <!-- automaton describing the states and transitions of the protocol -->
+    <xs:element name="behaviour">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="state"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+  <!-- description of individual automaton states -->
+    <xs:element name="state">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="label"/>
+                <xs:element ref="type"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="transition"/>
+                <xs:element minOccurs="0" maxOccurs="1" ref="success"/>
+                <xs:element minOccurs="0" maxOccurs="1" ref="report"/>
+                <xs:element minOccurs="0" maxOccurs="1" ref="event"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+  
+    <!-- label of the start state -->
+    <xs:element name="label" type="xs:NCName"/>
+
+    <!-- label of the end state -->
+    <xs:element name="type" type="xs:NCName"/>
+    
+    <!-- label of the end state -->
+    <xs:element name="report" type="xs:string"/>
+    
+    <xs:element name="success" type="xs:string"/>
+    
+    <xs:element name="event" type="xs:string"/>
+  
+    <xs:element name="transition">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="to"/>
+                <xs:choice>
+                    <xs:element ref="guards" />
+                    <xs:element ref="message" />
+                </xs:choice>
+                <xs:element minOccurs="0" maxOccurs="1" ref="report"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <!-- label of the start state -->
+    <xs:element name="to" type="xs:NCName"/>
+  
+    <xs:element name="guards">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                    <xs:element minOccurs="0" maxOccurs="unbounded" ref="equal"/>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" ref="contains"/>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" ref="notequal"/>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" ref="counter"/>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" ref="lessthan"/>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" ref="greaterthan"/>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" ref="regex"/>
+                </xs:choice>  
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="message">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="url" type="xs:string"/>
+                <xs:element name="path" minOccurs="0" type="xs:string"/>
+                <xs:element name="method" type="xs:string"/>
+                <xs:element name="type" type="xs:string"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="headers"/>
+                <xs:element minOccurs="0" name="body" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="headers">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="header"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="header">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name" type="xs:string"/>
+                <xs:element name="value" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+  
+    <xs:element name="equal">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="param" type="xs:string"/>
+                <xs:element name="value" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="contains">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="param" type="xs:string"/>
+                <xs:element name="value" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="notequal">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="param" type="xs:string"/>
+                <xs:element name="value" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="counter">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="param" type="xs:string"/>
+                <xs:element name="value" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="lessthan">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="param" type="xs:string"/>
+                <xs:element name="value" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="greaterthan">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="param" type="xs:string"/>
+                <xs:element name="value" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+	
+    <xs:element name="regex">
+	<xs:complexType>
+            <xs:sequence>
+                <xs:element name="param" type="xs:string"/>
+                <xs:element name="value" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

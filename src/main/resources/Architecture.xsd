@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<!--
+Schema for architecture part of the interoperability. Supports the specification
+of components and interfaces that are part of the interoperability tests.
+-->
+
+<xs:schema version="1.0"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified">
+
+    <!-- An architecture is a collection of two or more components -->
+    <xs:element name="architecture">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="unbounded" ref="component"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <!-- description of individual architectural components -->
+    <xs:element name="component">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="id"/> 
+                <xs:element ref="address" />
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="link"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="interface"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+  
+  <!-- Unique Id of component/intf within this architecture; no other component
+       can have the same identifier  -->
+  <xs:element name="id" type="xs:NCName"/>
+  
+  <xs:element name="protocol" type="xs:string"/>
+  
+  <xs:element name="link">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="with"/>
+            </xs:sequence>
+        </xs:complexType>
+  </xs:element>
+  
+  <!-- label of the node -->
+  <xs:element name="with" type="xs:NCName"/>
+  
+  <!-- Physical address of the component. This can be either the IPv4 or
+       IPv6 Address  -->
+  <xs:element name="address" type="xs:string"/>
+  
+   <!-- description of individual component interface -->
+    <xs:element name="interface">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="id"/> 
+                <xs:element name = "url" />
+                <xs:element minOccurs="0" maxOccurs="1" name = "protocol" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+     <!-- Physical address of the component. This can be either the IPv4 or
+       IPv6 Address  -->
+  <xs:element name="url" type="xs:anyURI"/>
+</xs:schema>
