@@ -1,5 +1,5 @@
 # Model-Interop
-ModelInterop is a model-based interoperability testing tool. That is, it provides
+Model-Interop is a model-based interoperability testing tool. That is, it provides
 a set of model driven engineering tools to perform both interface and interoperability 
 testing of Internet of Thigs and Web products and platforms. The tool can be used 
 to test that systems comply with different standard specifications e.g. OneM2M, or
